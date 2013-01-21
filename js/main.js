@@ -64,6 +64,8 @@ var comments = {
 	_printActualComment: function(comment){
 
 		var body = comment.data.body;
+		var body_html = $("<div/>").html(comment.data.body_html).text();
+
 		var author = comment.data.author;
 		var karma = comment.data.ups - comment.data.downs;
 		var prefix = (karma > 0 ? "+" : '');
@@ -77,7 +79,7 @@ var comments = {
 				'<div class="comment_karma">' + prefix + karma + '</div>' +
 			'</div>' +
 
-			'<div class="comment_body">' + body + '</div>';
+			'<div class="comment_body">' + body_html + '</div>';
 		
 		if (comment.data.replies)
 			html += '<div class="comment_replies">' + this.printReplies(comment.data.replies) + '</div>';
@@ -98,31 +100,27 @@ var comments = {
 		
 
 		var $comments_div = $(".comments_id_" + id);
-		console.log($comments_div);
 
 		if ($comments_div.is(":visible"))
 		{
 			$(".item_container[data-id='" + id + "'] .actions_holder").css("border-radius", "0px 0px 6px 6px");
 			$comments_div.remove();
-			console.log("comments div exists, hiding");
 		}
 		else
 		{
 			$(".item_container[data-id='" + id + "'] .actions_holder").css("border-radius", "0px 0px 0px 0px");
 			$comments_div.html('').show();
-			console.log("comments div exists, showing");
 
-			//console.log("comments div does not exist");
 			$parent.append('<div class="comments_holder comments_id_' + id + '"><span class="loading">Loading Comments...</span></div>').show();
 
 			$.getJSON(url + "?jsonp=?", function(data) { 
-				console.log(data);
+				//console.log(data);
 				$(".comments_id_" + id).html(comments.printComments(data));
 			});
 
 		}
 
-	}
+	},
 
 };
 
@@ -174,7 +172,6 @@ var worker = {
 
 			'<div class="desc_holder clearfix">' +
 				'<div class="title">' + child.title + '</div>' +
-				'<div class="score">' + prefix + child.score + '</div>' +
 			'</div>' +
 
 			'<div class="image_holder">' +
@@ -184,6 +181,7 @@ var worker = {
 			'</div>' +
 
 			'<div class="actions_holder">' +
+				'<div class="score">' + prefix + child.score + '</div>' +
 				'<ul class="icon_holder clearfix">' +
 					'<li><a title="View Comments" href="#" class="view_comments" data-id="' + child.name + '"><i class="icon-comment"></i></a></li>' + 
 					'<li><a title="View on Reddit" href="' + permalink + '" target="_blank"><i class="icon-share-alt"></i></a></li>' + 
@@ -223,7 +221,7 @@ var worker = {
 		this.clearAllCols();
 
 		$.getJSON("http://www.reddit.com"+this.hash+".json?jsonp=?", function(data) { 
-			console.log(data);
+			//console.log(data);
 
 			for (var i in data.data.children)
 			{

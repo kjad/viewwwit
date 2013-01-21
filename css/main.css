@@ -15,14 +15,14 @@
 }
 
 body {
-	background: url('../img/debut_light.png') top left repeat;
+	background: url('../img/gray_jean.png') top left repeat;
 }
 
 .item_container {
 	background-color: #E9E9E9;
-	margin-bottom: 30px;
+	margin-bottom: 35px;
 	border-radius: 6px 6px 6px 6px;
-	box-shadow: 5px 5px 20px -5px rgba(0, 0, 0, 0.45);
+	box-shadow: 5px 5px 20px -5px rgba(0, 0, 0, 0.3);
 	border: 1px solid #CCC;
 }
 .image_holder_inner {
@@ -57,19 +57,19 @@ body {
 	float: left;
 }
 
-.desc_holder .score {
-	font-size: 11px;
-	color: #666;
-	float: right;
-
-}
-
 .actions_holder {
 	padding: 10px;
 	background-color: #F9F9F9;
 	border-radius: 0px 0px 6px 6px;
 	border-top: 1px solid #DDD;
 }
+
+.actions_holder .score {
+	font-size: 11px;
+	color: #666;
+	float: left;
+}
+
 
 ul.icon_holder {
 	list-style-type: none;
@@ -83,7 +83,7 @@ ul.icon_holder li {
 }
 
 .comments_holder {
-	background: url('../img/gray_jean.png') top left repeat;
+	background: url('../img/debut_light.png') top left repeat;
 	padding: 20px;
 
 	border-top: 1px solid #DDD;
@@ -126,6 +126,7 @@ ul.icon_holder li {
 }
 .hero_container {
 	border: 1px solid #DDD;
+	background-color: #F5F5F5;
 }
 #alien {
 }
