@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
 	worker.setLocationHash(worker.getHash());
 
 	$("#subredditinput").on('keypress', function(e) {
@@ -125,6 +126,9 @@ var comments = {
 };
 
 var worker = {
+	count: 0,
+	last_id: '',
+
 	loadSubreddit: function(subreddit) {
 			var h = subreddit;
 			if (!h.match(/\/$/))
@@ -141,16 +145,29 @@ var worker = {
 		var $col = $("#col_1");
 		var h = h1;
 
+		/*
+		console.log("---------------------------");
+		console.log("Start addImage. h1: " + h1 + " h2: " + h2 + " h3: " + h3);
+		console.log("col is col_1");
+		*/
+
 		if (h2 < h)
 		{
+			//console.log("h2 < h, " + h2 + " < " + h);
+			//console.log("col is col_2");
+
 			$col = $("#col_2");
 			h = h2;
 		}
 
 		if (h3 < h)
 		{
+			//console.log("h3 < h, " + h3 + " < " + h);
+			//console.log("col is col_3");
+
 			$col = $("#col_3");
 			h = h3;
+
 		}
 
 		$col.append(html);
@@ -162,6 +179,13 @@ var worker = {
 		if (child.domain.match(/imgur/) && !url.match(/jpg|png|gif$/))
 		{
 			url += '.jpg';
+		}
+		if (child.domain.match(/quickmeme.com/))
+		{
+			var parts = child.url.split('/');
+			var qkid = parts[parts.length - 2];
+
+			url = 'http://i.qkme.me/' + qkid + '.jpg';
 		}
 
 		var prefix = (child.score > 0 ? "+" : "");
@@ -214,28 +238,65 @@ var worker = {
 
 	setLocationHash: function(hash) {
 		window.location.hash = hash;	
+
+		if (hash != this.hash)
+		{
+			$("#subreddit").html("Current Subreddit: " + this.hash);
+			this.clearAllCols();
+			this.count = 0;
+			this.last_id = '';
+
+		}
+
 		this.hash = hash;
 
-		$("#subreddit").html("Current Subreddit: " + this.hash);
+		var pagination = '';
+	
 
-		this.clearAllCols();
 
-		$.getJSON("http://www.reddit.com"+this.hash+".json?jsonp=?", function(data) { 
-			//console.log(data);
+		if (this.count > 0)
+		{
+			pagination = 'count=' + this.count + '&after=' + this.last_id + '&';
+		}
+
+
+		$.getJSON("http://www.reddit.com"+this.hash+".json?"+pagination+"jsonp=?", function(data) { 
+			console.log(data);
 
 			for (var i in data.data.children)
 			{
+				var last_id = '';
 				var child = data.data.children[i].data;
 
-				if (!child.domain.match(/imgur/) && !child.url.match(/jpg|png|gif$/))
+				console.log(child);
+				last_id = child.name;
+
+				if (child.url.match(/jpg|png|gif$/))
+				{
+					worker.addImage(child);	
 					continue;
+				}
+
+				if (child.domain.match(/quickmeme.com/))
+				{
+					worker.addImage(child);	
+					continue;
+				}
 
 				if (child.url.match(/imgur.com\/a\//))
 					continue;
 
-				worker.addImage(child);	
+				if (child.domain.match(/imgur.com/))
+				{
+					worker.addImage(child);	
+					continue;
+				}
 			}
+
+			worker.last_id = last_id
 		});
+
+		this.count += 25;
 
 	},
 
