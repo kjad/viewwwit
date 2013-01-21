@@ -4,19 +4,128 @@
    Author's custom styles
    ========================================================================== */
 
+.clearfix {
+    *zoom: 1;
+}
 
+.clearfix:after {
+    clear: both;
+    content: "";
+    display: table;
+}
 
+body {
+	background: url('../img/debut_light.png') top left repeat;
+}
 
+.item_container {
+	background-color: #E9E9E9;
+	margin-bottom: 30px;
+	border-radius: 6px 6px 6px 6px;
+	box-shadow: 5px 5px 20px -5px rgba(0, 0, 0, 0.45);
+	border: 1px solid #CCC;
+}
+.image_holder_inner {
+	overflow: hidden;
+}
 
+.image_holder {
+	padding: 10px;
+}
 
+.image_holder_inner > img {
+    -webkit-transition: all 0.29s ease-out;    
+    -moz-transition: all 0.29s ease-out;   
+}
 
+.image_holder_inner:hover > img {
+	-webkit-transition: all 0.29s ease-out;
+    -moz-transition: all 0.29s ease-out;
+    -webkit-transform: rotate(0deg) scale(1.05, 1.05); 
+    -moz-transform: rotate(0deg) scale(1.05, 1.05); 
+}
 
+.desc_holder {
+	padding: 10px;
+	background-color: #F9F9F9;
+	border-radius: 6px 6px 0px 0px;
+	border-bottom: 1px solid #DDD;
+}
 
+.desc_holder .title {
+	font-size: 18px;
+	float: left;
+}
 
+.desc_holder .score {
+	font-size: 11px;
+	color: #666;
+	float: right;
 
+}
 
+.actions_holder {
+	padding: 10px;
+	background-color: #F9F9F9;
+	border-radius: 0px 0px 6px 6px;
+	border-top: 1px solid #DDD;
+}
 
+ul.icon_holder {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
 
+ul.icon_holder li {
+	float: right;
+	padding-left: 10px;
+}
 
+.subreddit_name {
+	border-radius: 6px 6px 0 0;
+	border-bottom: 30px solid #E9E9E9;
+}
 
+.comments_holder {
+	background: url('../img/gray_jean.png') top left repeat;
+	padding: 20px;
 
+	border-top: 1px solid #DDD;
+	border-radius: 0px 0px 6px 6px;
+
+	max-height: 300px;
+	overflow-y: auto;
+}
+
+.comment_holder {
+	border-left: 1px solid #DDD;
+	padding-left: 7px;
+}
+.comment_titlebar {
+	border-bottom:1px solid #eee;
+	padding: 3px 0px;
+	color: white;
+	border-radius: 6px 6px 0px 0px;
+}
+.comment_author {
+	float:left;
+	color: #555;
+}
+.comment_karma {
+	font-size: 10px;
+	color: gray;
+	float:right;
+}
+.comment_body {
+	background-color: rgba(255, 255, 255, 0.33);
+	padding: 5px;
+	margin-bottom: 5px;
+	border-radius: 6px 6px 6px 6px;
+	border-bottom: 1px solid #eee;
+}
+.comment_replies {
+}
+.loading {
+	color: #333;
+}
