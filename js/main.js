@@ -6,25 +6,16 @@ $(document).ready(function() {
 		
 	});
 
-	$(".span4").on("click", ".item_container", function(e) {
-		var name  = $(this).attr("data-id");
-		var parts = name.split('_');
-		var type = parts[0];	
-		var id = parts[1];	
-		var url = worker.buildCommentsUrl(id);
+	$(".span4").on("click", ".view_comments", function(e) {
+		e.preventDefault();
 
-		worker.showContainer($(this));
+		comments.showContainer($(this));
 
-		$.getJSON(url + "?jsonp=?", function(data) { 
-			console.log(data);
-			$(".comments_id_" + name ).html(worker.printComments(data));
-		});
-	
 	});
 	
 });
 
-var worker = {
+var comments = {
 	printComments: function(comments) {
 
 		var html = '';
@@ -84,24 +75,45 @@ var worker = {
 
 	},
 	showContainer: function($container) {
-		var $parent = $container.parent();
+		var id = $container.attr("data-id");
+		var $parent = $(".item_container[data-id='" + id + "']");
 
-		// hide all cols, but mine, and make mine bigger
-		//$(".m_cols").hide();
-		//$parent.show().removeClass("span4").addClass("span12");
+		var parts = id.split('_');
+		var type = parts[0];	
+		var raw_id = parts[1];	
+		var url = worker.buildCommentsUrl(raw_id);
+		
 
-		// hide all contianers but mine
-		//$parent.children(".item_container").hide();
-		//$container.show();
+		var $comments_div = $(".comments_id_" + id);
+		console.log($comments_div);
 
-		$container.append('<div class="comments_holder comments_id_' + $container.attr('data-id') + '">Loading Comments...</div>').show();
+		if ($comments_div.is(":visible"))
+		{
+			$(".item_container[data-id='" + id + "'] .actions_holder").css("border-radius", "0px 0px 6px 6px");
+			$comments_div.remove();
+			console.log("comments div exists, hiding");
+		}
+		else
+		{
+			$(".item_container[data-id='" + id + "'] .actions_holder").css("border-radius", "0px 0px 0px 0px");
+			$comments_div.html('').show();
+			console.log("comments div exists, showing");
 
-		$container.scrollTop();
+			//console.log("comments div does not exist");
+			$parent.append('<div class="comments_holder comments_id_' + id + '"><span class="loading">Loading Comments...</span></div>').show();
 
-	},
-	backToNormal: function() {
-		window.location.reload();
-	},
+			$.getJSON(url + "?jsonp=?", function(data) { 
+				console.log(data);
+				$(".comments_id_" + id).html(comments.printComments(data));
+			});
+
+		}
+
+	}
+
+};
+
+var worker = {
 	addImage: function(child) {
 		var html = this._buildHtml(child);
 
@@ -136,20 +148,27 @@ var worker = {
 		}
 
 		var prefix = (child.score > 0 ? "+" : "");
+		var permalink = "http://www.reddit.com" + child.permalink;
 
 		var html = 
 		'<div class="item_container" data-id="' + child.name + '">' + 
 
 			'<div class="desc_holder clearfix">' +
 				'<div class="title">' + child.title + '</div>' +
-				'<div class="score">' + 
-					'<a href="http://www.reddit.com' + child.permalink +'">R </a>' +
-					prefix + child.score + 
-				'</div>' +
+				'<div class="score">' + prefix + child.score + '</div>' +
 			'</div>' +
 
 			'<div class="image_holder">' +
-				'<img src="' + url + '" />' +
+				'<div class="image_holder_inner">' +
+					'<img src="' + url + '" />' +
+				'</div>' +
+			'</div>' +
+
+			'<div class="actions_holder">' +
+				'<ul class="icon_holder clearfix">' +
+					'<li><a title="View Comments" href="#" class="view_comments" data-id="' + child.name + '"><i class="icon-comment"></i></a></li>' + 
+					'<li><a title="View on Reddit" href="' + permalink + '" target="_blank"><i class="icon-share-alt"></i></a></li>' + 
+				'</ul>' +
 			'</div>' +
 
 		'</div>';
