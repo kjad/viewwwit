@@ -4,19 +4,98 @@
    Author's custom styles
    ========================================================================== */
 
+.clearfix {
+    *zoom: 1;
+}
 
+.clearfix:after {
+    clear: both;
+    content: "";
+    display: table;
+}
 
+body {
+	background-color: #2d2d2d;
+}
 
+.item_container {
+	background-color: #E9E9E9;
+	margin-bottom: 30px;
+	border-radius: 6px 6px 6px 6px;
+	cursor: pointer;
+}
 
+.image_holder {
+	border-top: 1px solid #DDD;
+	padding: 10px;
+	overflow: hidden;
+}
+.image_holder > img {
+    -webkit-transition: all 0.29s ease-out;    
+    -moz-transition: all 0.29s ease-out;   
+}
 
+.image_holder:hover > img {
+	-webkit-transition: all 0.29s ease-out;
+    -moz-transition: all 0.29s ease-out;
+    -webkit-transform: rotate(0deg) scale(1.05, 1.05); 
+    -moz-transform: rotate(0deg) scale(1.05, 1.05); 
+}
 
+.desc_holder {
+	padding: 10px;
+	background-color: #F9F9F9;
+	border-radius: 6px 6px 6px 6px;
+}
 
+.desc_holder .title {
+	font-size: 18px;
+	float: left;
+}
 
+.desc_holder .score {
+	font-size: 11px;
+	color: #666;
+	float: right;
 
+}
 
+.subreddit_name {
+	border-radius: 6px 6px 0 0;
+	border-bottom: 30px solid #E9E9E9;
+}
 
+.comments_holder {
+	background-color: #D9D9D9;
+	padding: 20px;
+	max-height: 300px;
+	overflow-y: auto;
+}
 
+.comment_holder {
 
-
-
-
+}
+.comment_titlebar {
+	background-color: #555;
+	border-bottom:1px solid #666;
+	padding: 5px;
+	color: white;
+	border-radius: 6px 6px 0px 0px;
+}
+.comment_author {
+	float:left;
+}
+.comment_karma {
+	font-size: 10px;
+	color: gray;
+	float:right;
+}
+.comment_body {
+	background-color: #F9F9F9;
+	padding: 5px;
+	margin-bottom: 5px;
+	border-radius: 0px 0px 6px 6px;
+}
+.comment_replies {
+	padding-left: 10px;
+}
