@@ -2,7 +2,10 @@ $(document).ready(function() {
 	worker.setLocationHash(worker.getHash());
 
 	$("#appendedInputButton").on('click', function(e) {
-		worker.setLocationHash($("#subredditinput").val());
+		var h = $("#subredditinput").val();
+		if (!h.match(/\/$/))
+			h += '/';
+		worker.setLocationHash(h);
 		
 	});
 
