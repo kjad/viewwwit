@@ -51,22 +51,42 @@
 
         <div class="container">
 
-			<div class="hero-unit banner_container">
-				<h1>Welcome to Viewwwit</h1>
-				<h3>A simple reddit image viewer</h3>
-				<div id="banner"><a href="https://github.com/kjad/viewwwit">Fork me on GitHub</a></div>
+			<div class="hero-unit hero_container banner_container clearfix">
+					<div class="span8">
+						<h1>Welcome to Viewwwit</h1>
+						<h3>A simple reddit image viewer</h3>
+						<div id="banner"><a href="https://github.com/kjad/viewwwit">Fork me on GitHub</a></div>
+					</div>
+					<div class="span2">
+						<img id="alien" class="pull-right" src="img/alien.png" />
+					</div>
 			</div>
 
 			<div class="row">
 				<div class="span12">
+
 					<div class="well subreddit_name">
-						<h1 id="subreddit" class=""></h1>
-						<div class="input-append">
-							<label>Enter another subreddit:</label>
+						<div class="clearfix">
+							<h1 id="subreddit" class="pull-left"></h1>
+						</div>
+					</div>
+
+					<div class="additional_subreddits clearfix">
+						<div class="listing pull-left">
+							<span>View:</span>
+							<a class="subreddit_link">/r/pics</a>
+							<a class="subreddit_link">/r/funny</a>
+							<a class="subreddit_link">/r/wtf</a>
+							<a class="subreddit_link">/r/AdviceAnimals</a>
+							<a class="subreddit_link">/r/fffffffuuuuuuuuuuuu</a>
+							<a class="subreddit_link">/r/gaming</a>
+						</div>
+						<div class="input-append pull-right">
 							<input class="span2" id="subredditinput" type="text" value="/r/">
 							<button class="btn" id="appendedInputButton" type="button">Go!</button>
 						</div>
 					</div>
+
 				</div>
 			</div>
 

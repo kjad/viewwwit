@@ -1,12 +1,22 @@
 $(document).ready(function() {
 	worker.setLocationHash(worker.getHash());
 
+	$("#subredditinput").on('keypress', function(e) {
+		if (e.which == 13) 
+		{
+			e.preventDefault();
+			worker.loadSubreddit($("#subredditinput").val());
+        }
+	});
+
 	$("#appendedInputButton").on('click', function(e) {
-		var h = $("#subredditinput").val();
-		if (!h.match(/\/$/))
-			h += '/';
-		worker.setLocationHash(h);
+		worker.loadSubreddit($("#subredditinput").val());
 		
+	});
+
+	$(".subreddit_link").on('click', function(e) {
+		e.preventDefault();
+		worker.loadSubreddit($(this).html());
 	});
 
 	$(".span4").on("click", ".view_comments", function(e) {
@@ -117,6 +127,12 @@ var comments = {
 };
 
 var worker = {
+	loadSubreddit: function(subreddit) {
+			var h = subreddit;
+			if (!h.match(/\/$/))
+				h += '/';
+			this.setLocationHash(h);
+	},
 	addImage: function(child) {
 		var html = this._buildHtml(child);
 
@@ -189,7 +205,7 @@ var worker = {
 		}
 		else
 		{
-			hash = '/r/pics/';
+			hash = '/r/funny/';
 		}
 
 		if (!hash.match(/\/$/))
