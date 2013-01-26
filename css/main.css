@@ -153,3 +153,6 @@ ul.icon_holder li {
 	cursor: pointer;
 	padding-right: 10px;
 }
+.more_links {
+	text-align: center;
+}

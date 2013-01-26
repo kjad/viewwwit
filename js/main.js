@@ -9,7 +9,7 @@ $(document).ready(function() {
 		if (e.which == 13) 
 		{
 			e.preventDefault();
-			worker.loadSubreddit($("#subredditinput").val());
+			worker.loadSubreddit('/r/' + $("#subredditinput").val());
         }
 	});
 
@@ -30,6 +30,7 @@ $(document).ready(function() {
 
 	});
 
+	/*
 	$(".pagination_waypoint").waypoint(function() {
 
 		//console.log("Waypoint...");
@@ -37,6 +38,13 @@ $(document).ready(function() {
 		worker.loadSubreddit(worker.getHash());
 		//console.log("Complete.");
 
+	});
+	*/
+
+	$(".more_links a").on('click', function(e) {
+		e.preventDefault();
+		worker.skipSetHash = 1;
+		worker.loadSubreddit(worker.getHash());
 	});
 	
 });
@@ -173,7 +181,11 @@ var worker = {
 	},
 
 	setHash: function(hash) {
-		window.history.pushState({}, '', hash);
+		if (typeof(window.history.pushState) == 'function') {
+			window.history.pushState({}, '', hash);
+		} else {
+			window.location.hash = '#' + hash;
+		}
 	},
 
 	_loadSubreddit: function(hash) {
