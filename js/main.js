@@ -29,6 +29,8 @@ $(document).ready(function() {
 		comments.showContainer($(this));
 
 	});
+	
+	//$(".image_holder_inner").on("click", "img", function(e) { });
 
 	/*
 	$(".pagination_waypoint").waypoint(function() {
@@ -132,7 +134,9 @@ var worker = {
 
 			'<div class="image_holder">' +
 				'<div class="image_holder_inner">' +
-					'<img src="' + url + '" />' +
+					'<a href="' + url + '" target="_blank">' +
+						'<img src="' + url + '" />' +
+					'</a>' +
 				'</div>' +
 			'</div>' +
 

@@ -34,15 +34,19 @@ body {
 }
 
 .image_holder_inner > img {
+	/*
     -webkit-transition: all 0.29s ease-out;    
     -moz-transition: all 0.29s ease-out;   
+	*/
 }
 
 .image_holder_inner:hover > img {
+	/*
 	-webkit-transition: all 0.29s ease-out;
     -moz-transition: all 0.29s ease-out;
     -webkit-transform: rotate(0deg) scale(1.05, 1.05); 
     -moz-transform: rotate(0deg) scale(1.05, 1.05); 
+	*/
 }
 
 .desc_holder {
