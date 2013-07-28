@@ -1,9 +1,11 @@
 
 $(document).ready(function() {
 
+	/*
 	var hash = worker.getHash();
 	worker.setHash(hash);
 	worker.loadSubreddit(hash);
+	*/
 
 	$("#subredditinput").on('keypress', function(e) {
 		if (e.which == 13) 
@@ -38,19 +40,6 @@ $(document).ready(function() {
 		worker.loadSubreddit(worker.getHash());
 	});
 	
-	//$(".image_holder_inner").on("click", "img", function(e) { });
-
-	/*
-	$(".pagination_waypoint").waypoint(function() {
-
-		//console.log("Waypoint...");
-		worker.skipSetHash = 1;
-		worker.loadSubreddit(worker.getHash());
-		//console.log("Complete.");
-
-	});
-	*/
-
 	$(".more_links").on('click', function(e) {
 		e.preventDefault();
 		worker.skipSetHash = 1;
@@ -96,26 +85,14 @@ var worker = {
 			var $col = $("#col_1");
 			var h = h1;
 
-			/*
-			console.log("---------------------------");
-			console.log("Start addImage. h1: " + h1 + " h2: " + h2 + " h3: " + h3);
-			console.log("col is col_1");
-			*/
-
 			if (h2 < h)
 			{
-				//console.log("h2 < h, " + h2 + " < " + h);
-				//console.log("col is col_2");
-
 				$col = $("#col_2");
 				h = h2;
 			}
 
 			if (h3 < h)
 			{
-				//console.log("h3 < h, " + h3 + " < " + h);
-				//console.log("col is col_3");
-
 				$col = $("#col_3");
 				h = h3;
 
@@ -153,6 +130,8 @@ var worker = {
 		if (child.over_18 === true)
 				nsfwHtml = '<div class="pull-right"><span class="label label-important">NSFW</span></div>';
 
+		var fromNow = moment(child.created_utc.toString(), 'X').fromNow();
+
 		var html = 
 		'<div class="item_container" data-id="' + child.name + '">' + 
 
@@ -170,7 +149,7 @@ var worker = {
 			'</div>' +
 
 			'<div class="actions_holder">' +
-				'<div class="score">' + prefix + child.score + '</div>' +
+				'<div class="score">' + prefix + child.score + ' <span style="color:#ccc;">/</span> submitted ' + fromNow + ' by <a href="http://reddit.com/user/' + child.author + '" target="_blank">' + child.author + '</a></div>' +
 				'<ul class="icon_holder clearfix">' +
 					'<li><a title="View Comments" href="#" class="view_comments" data-id="' + child.name + '"><i class="icon-comment"></i></a></li>' + 
 					'<li><a title="View on Reddit" href="' + permalink + '" target="_blank"><i class="icon-share-alt"></i></a></li>' + 
@@ -184,25 +163,7 @@ var worker = {
 	},
 	getHash: function() {
 
-		/*
-		var hash = window.location.hash;
-
-		if (hash.match(/#\/r\/\w+/))
-		{
-			hash = hash.replace(/#/, '');
-		}
-		else
-		{
-			hash = '/r/funny/';
-		}
-
-		if (!hash.match(/\/$/))
-			hash += '/';
-		*/
-
 		var hash = window.location.pathname;
-
-		//console.log("hash is '" + hash + "'");
 
 		if (hash == '/')
 			hash = '/r/funny/';
@@ -258,7 +219,7 @@ var worker = {
 
 
 		$.getJSON("http://www.reddit.com"+this.hash+".json?"+pagination+"jsonp=?", function(data) { 
-			//console.log(data);
+			console.log(data);
 
 			for (var i in data.data.children)
 			{
@@ -266,7 +227,6 @@ var worker = {
 				var last_id = '';
 				var child = data.data.children[i].data;
 
-				//console.log(child);
 				last_id = child.name;
 
 				if (child.over_18 === true && that.showNsfw == 0)
