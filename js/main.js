@@ -29,6 +29,14 @@ $(document).ready(function() {
 		comments.showContainer($(this));
 
 	});
+
+	$(".nsfw_toggle button").on("click", function(e) {
+		var showNsfw = $(this).attr("data-nsfw");	
+		worker.showNsfw = showNsfw;
+
+		worker.hash = '';
+		worker.loadSubreddit(worker.getHash());
+	});
 	
 	//$(".image_holder_inner").on("click", "img", function(e) { });
 
@@ -62,6 +70,7 @@ var worker = {
 	count: 0,
 	last_id: '',
 	skipSetHash: 0,
+	showNsfw: 1,
 
 	loadSubreddit: function(subreddit) {
 			var h = subreddit;
@@ -112,7 +121,7 @@ var worker = {
 		var url = child.url;
 		if (child.domain.match(/imgur/) && !url.match(/jpg|png|gif$/))
 		{
-			url += '.jpg';
+			url += 'l.jpg';
 		}
 		if (child.domain.match(/quickmeme.com/))
 		{
@@ -125,17 +134,24 @@ var worker = {
 		var prefix = (child.score > 0 ? "+" : "");
 		var permalink = "http://www.reddit.com" + child.permalink;
 
+		var imgTag = '<img src="' + url + '" />';
+
+		var nsfwHtml = '';
+		if (child.over_18 === true)
+				nsfwHtml = '<div class="pull-right"><span class="label label-important">NSFW</span></div>';
+
 		var html = 
 		'<div class="item_container" data-id="' + child.name + '">' + 
 
 			'<div class="desc_holder clearfix">' +
-				'<div class="title">' + child.title + '</div>' +
+				'<div class="title pull-left">' + child.title + '</div>' +
+				nsfwHtml +
 			'</div>' +
 
 			'<div class="image_holder">' +
 				'<div class="image_holder_inner">' +
 					'<a href="' + url + '" target="_blank">' +
-						'<img src="' + url + '" />' +
+						imgTag + 
 					'</a>' +
 				'</div>' +
 			'</div>' +
@@ -217,6 +233,7 @@ var worker = {
 
 		var pagination = '';
 	
+		var that = this;
 
 
 		if (this.count > 0)
@@ -230,21 +247,28 @@ var worker = {
 
 			for (var i in data.data.children)
 			{
+
 				var last_id = '';
 				var child = data.data.children[i].data;
 
 				//console.log(child);
 				last_id = child.name;
 
+				if (child.over_18 === true && that.showNsfw == 0)
+				{
+					continue;
+				}
+
+
 				if (child.url.match(/jpg|png|gif$/))
 				{
-					worker.addImage(child);	
+					that.addImage(child);	
 					continue;
 				}
 
 				if (child.domain.match(/quickmeme.com/))
 				{
-					worker.addImage(child);	
+					that.addImage(child);	
 					continue;
 				}
 
@@ -253,12 +277,12 @@ var worker = {
 
 				if (child.domain.match(/imgur.com/))
 				{
-					worker.addImage(child);	
+					that.addImage(child);	
 					continue;
 				}
 			}
 
-			worker.last_id = last_id
+			that.last_id = last_id
 		});
 
 		this.count += 25;

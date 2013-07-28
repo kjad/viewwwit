@@ -54,7 +54,7 @@
         <div class="container">
 
 			<!-- manually apply hero-unit style for mobile -->
-			<div class="hero_container banner_container clearfix" style="padding: 60px; margin-bottom: 30px; font-size: 18px; font-weight: 200; line-height: 30px; color: inherit; background-color: #eee; -webkit-border-radius: 6px; -moz-border-radius: 6px; border-radius: 6px;">
+			<div class="hero_container banner_container clearfix" style="padding: 60px; margin-bottom: 30px; font-size: 18px; font-weight: 200; line-height: 30px; color: inherit; background-color: #fff;">
 					<h1>Welcome to Viewwwit</h1>
 					<h3>A simple reddit image viewer</h3>
 					<div id="banner"><a href="https://github.com/kjad/viewwwit">Fork me on GitHub</a></div>
@@ -66,6 +66,12 @@
 					<div class="well subreddit_name">
 						<div class="clearfix">
 							<h3 id="subreddit" class="pull-left"></h3>
+							<div class="pull-right" style="padding-top:15px;">
+								<div class="btn-group nsfw_toggle" data-toggle="buttons-radio">
+									<button type="button" data-nsfw="1" class="btn btn-primary active">Show NSFW</button>
+									<button type="button" data-nsfw="0" class="btn btn-primary">Hide NSFW</button>
+								</div>
+							</div>
 						</div>
 					</div>
 
@@ -82,7 +88,7 @@
 						<div class="input-append input-prepend pull-right">
 							<button class="btn disabled" type="button" style="padding-left:5px; padding-right:5px;">/r/</button>
 							<input class="span2" id="subredditinput" type="text" value="">
-							<button class="btn" id="appendedInputButton" type="button">Go!</button>
+							<button class="btn" id="appendedInputButton" type="button btn-primary">Go!</button>
 						</div>
 					</div>
 

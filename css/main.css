@@ -15,14 +15,19 @@
 }
 
 body {
+	/*
 	background: url('../img/gray_jean.png') top left repeat;
+	*/
+	background: url('../img/grey_wash_wall.png') top left repeat;
 }
 
 .item_container {
 	background-color: #E9E9E9;
 	margin-bottom: 35px;
+	/*
 	border-radius: 6px 6px 6px 6px;
 	box-shadow: 5px 5px 20px -5px rgba(0, 0, 0, 0.3);
+	*/
 	border: 1px solid #CCC;
 }
 .image_holder_inner {
@@ -30,7 +35,9 @@ body {
 }
 
 .image_holder {
+	/*
 	padding: 10px;
+	*/
 }
 
 .image_holder_inner > img {
@@ -52,7 +59,9 @@ body {
 .desc_holder {
 	padding: 10px;
 	background-color: #F9F9F9;
+	/*
 	border-radius: 6px 6px 0px 0px;
+	*/
 	border-bottom: 1px solid #DDD;
 }
 
@@ -136,14 +145,17 @@ ul.icon_holder li {
 }
 .subreddit_name {
 	margin-bottom: 0;
-	border-radius: 6px 6px 0 0;
+	border-radius: 0px;
+	background-color: #fff;
 }
 
 .additional_subreddits {
 	background-color: #E9E9E9;
 	padding: 10px;
 	border: 1px #CCC solid;
+	/*
 	border-radius: 0 0 6px 6px;
+	*/
 	margin-bottom: 20px;
 }
 .additional_subreddits .listing {
