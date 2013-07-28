@@ -172,3 +172,14 @@ ul.icon_holder li {
 .more_links {
 	text-align: center;
 }
+.scrollToTop {
+    width:40px;
+    height:40px;
+    opacity:0.3;
+    position:fixed;
+    bottom:25px;
+    right:60px;
+    display:none;
+    text-indent:-9999px;
+    background: url('../img/up.png') no-repeat;
+}

@@ -45,6 +45,21 @@ $(document).ready(function() {
 		worker.skipSetHash = 1;
 		worker.loadSubreddit(worker.getHash());
 	});
+
+	$(window).scroll(function(){
+		if ($(this).scrollTop() > 100) {
+			$('.scrollToTop').fadeIn();
+		} else {
+			$('.scrollToTop').fadeOut();
+		}
+	});
+
+	$('.scrollToTop').click(function(){
+		$("html, body").animate({ 
+			scrollTop: 0 
+		}, 600);
+		return false;
+	});
 	
 });
 
