@@ -51,7 +51,7 @@ $(document).ready(function() {
 	});
 	*/
 
-	$(".more_links a").on('click', function(e) {
+	$(".more_links").on('click', function(e) {
 		e.preventDefault();
 		worker.skipSetHash = 1;
 		worker.loadSubreddit(worker.getHash());
@@ -71,6 +71,8 @@ var worker = {
 	last_id: '',
 	skipSetHash: 0,
 	showNsfw: 1,
+	timerCount: 0,
+	timeoutIds: [],
 
 	loadSubreddit: function(subreddit) {
 			var h = subreddit;
@@ -79,41 +81,52 @@ var worker = {
 			this._loadSubreddit(h);
 	},
 	addImage: function(child) {
-		var html = this._buildHtml(child);
+		var that = this;
 
-		var h1 = $("#col_1").height();	
-		var h2 = $("#col_2").height();
-		var h3 = $("#col_3").height();
+		this.timerCount += 1;
 
-		var $col = $("#col_1");
-		var h = h1;
+		var id = setTimeout(function() {
 
-		/*
-		console.log("---------------------------");
-		console.log("Start addImage. h1: " + h1 + " h2: " + h2 + " h3: " + h3);
-		console.log("col is col_1");
-		*/
+			var html = that._buildHtml(child);
 
-		if (h2 < h)
-		{
-			//console.log("h2 < h, " + h2 + " < " + h);
-			//console.log("col is col_2");
+			var h1 = $("#col_1").height();	
+			var h2 = $("#col_2").height();
+			var h3 = $("#col_3").height();
 
-			$col = $("#col_2");
-			h = h2;
-		}
+			var $col = $("#col_1");
+			var h = h1;
 
-		if (h3 < h)
-		{
-			//console.log("h3 < h, " + h3 + " < " + h);
-			//console.log("col is col_3");
+			/*
+			console.log("---------------------------");
+			console.log("Start addImage. h1: " + h1 + " h2: " + h2 + " h3: " + h3);
+			console.log("col is col_1");
+			*/
 
-			$col = $("#col_3");
-			h = h3;
+			if (h2 < h)
+			{
+				//console.log("h2 < h, " + h2 + " < " + h);
+				//console.log("col is col_2");
 
-		}
+				$col = $("#col_2");
+				h = h2;
+			}
 
-		$col.append(html);
+			if (h3 < h)
+			{
+				//console.log("h3 < h, " + h3 + " < " + h);
+				//console.log("col is col_3");
+
+				$col = $("#col_3");
+				h = h3;
+
+			}
+
+			$col.append(html);
+
+		}, this.timerCount * 300);
+
+		this.timeoutIds.push(id);
+
 		
 	},
 	_buildHtml: function(child) {
@@ -224,7 +237,9 @@ var worker = {
 		{
 			$("#subreddit").html("Current Subreddit: " + hash);
 			this.clearAllCols();
+			this.clearTimeouts();
 			this.count = 0;
+			this.timerCount = 0;
 			this.last_id = '';
 
 		}
@@ -283,6 +298,7 @@ var worker = {
 			}
 
 			that.last_id = last_id
+			that.timerCount = 0;
 		});
 
 		this.count += 25;
@@ -293,6 +309,14 @@ var worker = {
 		$("#col_1").html('');
 		$("#col_2").html('');
 		$("#col_3").html('');
+	},
+
+	clearTimeouts: function() {
+		for (var i = 0; i < this.timeoutIds.length; i++)
+		{
+			clearTimeout(this.timeoutIds[i]);
+		}
+		this.timerCount = 0;
 	},
 
 	buildCommentsUrl: function(id) {
