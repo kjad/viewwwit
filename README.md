@@ -1,6 +1,25 @@
-## viewwwit
+# viewwwit
 
 A simple image viewer for reddit. Check it out @ [viewwwit.com](http://viewwwit.com/ "viewwwit.com")
+
+## Notes
+
+### TODO
+- Cleanup image layout (need to solve the "image layout strategy" problem)
+- Create search bar for subreddit
+- Dynamic URL routing, ex: "/r/aww", "/r/pics", ...
+- Combination subreddts: "/combo/aww+pics"
+- Sidenav of subreddts selected??
+- Travis CI & auto-deployment
+
+### Image layout strategy
+- Each Post will async load the image
+- Once image is loaded "broadcast", hey i got the dimensions
+- Parent (Mosaic) will keep count of "valid" children that have loaded dimensions
+- Once all kids have reported in, then go ahead and calculateHeight & render mosaic
+
+
+# Created with React
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
