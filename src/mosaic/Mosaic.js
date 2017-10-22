@@ -9,17 +9,33 @@ class Mosaic extends React.Component {
     super(props)
     this.state = {
       posts: [],
-      height: 0
+      childDimensionsCalculated: 0
     }
   }
 
   render() {
+    if (this.state.childDimensionsCalculated === this.state.posts.filter(p => p.valid).length) {
+
+      return (
+        <div className="is-widescreen">
+          {_.chain(this.state.posts)
+            .filter(p => p.valid)
+            .chunk(5)
+            .map((postsInRow) => {
+              return (
+                <div key={postsInRow.reduce((k, p) => k += p.data.id, '')}>
+                  {postsInRow.map(post => <span key={post.data.id}>{post.display(this.calculateHeight(postsInRow))}</span>)}
+                </div>
+              )
+            })
+            .value()}
+        </div>
+      )
+    }
+
     return (
-      <div className="container is-widescreen">
-        height: {this.height}
-        {this.state.posts.filter(p => p.valid).map((post) => (
-          <span key={post.data.id}>{post.display()}</span>
-        ))}
+      <div>
+        <progress className="progress is-primary" value={this.state.childDimensionsCalculated} max={this.state.posts.filter(p => p.valid).length}></progress>
       </div>
     )
   }
@@ -29,28 +45,33 @@ class Mosaic extends React.Component {
   }
 
   loadPosts() {
-    Axios.get('https://www.reddit.com/r/aww/.json')
+    let incrementDimesions = this.incrementDimesions.bind(this)
+    Axios.get('https://www.reddit.com/r/pics/.json')
       .then((response) => {
         this.setState((prevState) => ({
-          posts: prevState.posts.concat(response.data.data.children.map(p => new Post(p.data)))
+          posts: prevState.posts.concat(response.data.data.children.map(p => new Post(p.data, incrementDimesions)))
         }))
-        this.height = this.calculateHeight()
       })
       .catch((err) => {
         console.error(err)
       })
   }
 
-  calculateHeight() {
-    let averageAspectRatio = _.reduce(this.posts, (sum, post) => {
+  incrementDimesions(d) {
+    this.setState((prevState) => ({
+      childDimensionsCalculated: prevState.childDimensionsCalculated += 1
+    }))
+  }
+
+  // To caculate the height for the row, return the browser width divided by the average
+  // aspect ratio for all the provided posts
+  calculateHeight(posts) {
+    return this.browserWidth() / _.reduce(posts, (sum, post) => {
+      if (!post.dimensions) {
+        return sum
+      }
       return sum + (post.dimensions.width / post.dimensions.height)
-    }, 0)
-
-    console.log("post cnt", this.posts)
-    console.log("browserWidth", this.browserWidth())
-    console.log("avg aspect", averageAspectRatio)
-
-    return this.browserWidth() / averageAspectRatio;
+    }, 0);
   }
 
   browserWidth() {

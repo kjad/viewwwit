@@ -4,12 +4,13 @@ import Image from './displays/Image'
 import Gfycat from './displays/Gfycat'
 
 class Post {
-  constructor(p) {
+  constructor(p, onDimensionUpdated) {
     this.data = p
     this.valid = true
     this.url = this.pickUrl()
     this.type = this.determineType()
-    this.dimensions = this.determineDimensions()
+    this.determineDimensions()
+    this.onDimensionUpdated = onDimensionUpdated
   }
 
   pickUrl() {
@@ -62,6 +63,9 @@ class Post {
   }
 
   determineDimensions() {
+
+    // TODO: Support mp4/gfycat
+
     let img = document.createElement('img');
     img.src = this.url
 
@@ -72,11 +76,12 @@ class Post {
           width: img.naturalWidth,
           height: img.naturalHeight
         }
+        this.onDimensionUpdated(this.dimensions)
       }
     }, 10);
   }
 
-  display() {
+  display(height) {
     switch (this.type) {
       case 'video':
         return (<Video post={this} />)
@@ -84,7 +89,7 @@ class Post {
         return (<Gfycat post={this} />)
       case 'image':
       default:
-        return (<Image post={this} />)
+        return (<Image post={this} height={height} />)
     }
   }
 }
