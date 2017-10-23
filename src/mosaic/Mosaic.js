@@ -46,7 +46,7 @@ class Mosaic extends React.Component {
 
   loadPosts() {
     let incrementDimesions = this.incrementDimesions.bind(this)
-    Axios.get('https://www.reddit.com/r/pics/.json')
+    Axios.get('https://www.reddit.com/r/pics/.json', { page: 25 })
       .then((response) => {
         this.setState((prevState) => ({
           posts: prevState.posts.concat(response.data.data.children.map(p => new Post(p.data, incrementDimesions)))

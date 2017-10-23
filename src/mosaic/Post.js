@@ -7,6 +7,8 @@ class Post {
   constructor(p, onDimensionUpdated) {
     this.data = p
     this.valid = true
+    this.loading = true
+
     this.url = this.pickUrl()
     this.type = this.determineType()
     this.determineDimensions()
@@ -23,6 +25,8 @@ class Post {
     // Gifv files
     } else if (url.match(/\.gifv$/)) {
       url = url.replace(/gifv/, 'mp4')
+
+    // Imgur albums
 
     // quickmeme.com
     } else if (this.data.domain.match(/quickmeme.com/)) {
