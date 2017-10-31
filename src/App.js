@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Navigation from './navigation/Navigation'
-import Mosaic from './mosaic/Mosaic'
+import Navigation from './components/Navigation'
+import MosaicContainer from './containers/MosaicContainer'
+import SearchContainer from './containers/SearchContainer'
 import './App.css';
 import 'bulma/css/bulma.css'
 
@@ -9,7 +10,8 @@ class App extends Component {
     return (
       <div className="App">
         <Navigation/>
-        <Mosaic/>
+        <SearchContainer/>
+        <MosaicContainer/>
       </div>
     );
   }

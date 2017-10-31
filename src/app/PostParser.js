@@ -2,17 +2,20 @@ import React from 'react'
 import Video from './displays/Video'
 import Image from './displays/Image'
 import Gfycat from './displays/Gfycat'
+import { updatePost } from '../actions'
 
-class Post {
-  constructor(p, onDimensionUpdated) {
+class PostParser {
+  constructor(p, dispatch) {
     this.data = p
+    this.dispatch = dispatch
+
+    this.id = p.id
     this.valid = true
     this.loading = true
 
     this.url = this.pickUrl()
     this.type = this.determineType()
     this.determineDimensions()
-    this.onDimensionUpdated = onDimensionUpdated
   }
 
   pickUrl() {
@@ -52,6 +55,7 @@ class Post {
     } else {
       console.log("Possibly unsupported url: ", url, this.data)
       this.valid = false
+      this.dispatch(updatePost(this))
     }
     return url
   }
@@ -80,7 +84,7 @@ class Post {
           width: img.naturalWidth,
           height: img.naturalHeight
         }
-        this.onDimensionUpdated(this.dimensions)
+        this.loading = false
       }
     }, 10);
   }
@@ -98,4 +102,4 @@ class Post {
   }
 }
 
-export default Post
+export default PostParser

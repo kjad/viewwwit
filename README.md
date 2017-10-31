@@ -8,12 +8,13 @@ To run the project locally
 ```
 git clone https://github.com/kjad/viewwwit.git
 cd viewwwit
+npm install
 npm run start
 ```
 
 ## Frameworks & technologies
 
-Viewwwit uses [React](https://reactjs.org/) and [Bulma](https://bulma.io/) to create the front end application
+Viewwwit uses [React](https://reactjs.org/), [Redux](http://redux.js.org/) and [Bulma](https://bulma.io/) to create the front end application
 
 Other plugins utilized include:
 - [lodash](https://lodash.com/)

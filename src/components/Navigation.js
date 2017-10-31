@@ -1,5 +1,4 @@
 import React from 'react'
-import './navigation.css'
 
 class Navigation extends React.Component {
   render () {
