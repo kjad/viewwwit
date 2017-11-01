@@ -2,7 +2,6 @@ import React from 'react'
 import Video from './displays/Video'
 import Image from './displays/Image'
 import Gfycat from './displays/Gfycat'
-import { updatePost } from '../actions'
 
 class PostParser {
   constructor(p, dispatch) {
@@ -55,7 +54,6 @@ class PostParser {
     } else {
       console.log("Possibly unsupported url: ", url, this.data)
       this.valid = false
-      this.dispatch(updatePost(this))
     }
     return url
   }

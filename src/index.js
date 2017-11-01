@@ -9,15 +9,14 @@ import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer from './reducers'
 
+let rootEl = document.getElementById('root')
+
 let store = createStore(
   reducer,
   {
     subreddit: 'pics',
     loading: true,
-    posts: [
-      { id: 1, foo: 'bar' },
-      { id: 2, foo: 'baz' },
-    ]
+    posts: []
   },
   composeWithDevTools(
     applyMiddleware(
@@ -30,6 +29,6 @@ ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>
-  , document.getElementById('root')
+  , rootEl
 );
 registerServiceWorker();

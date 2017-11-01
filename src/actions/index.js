@@ -1,20 +1,9 @@
-import PostParser from '../app/PostParser'
+import Post from '../components/Post'
 
 export const requestPosts = (subreddit) => {
   return {
     type: 'REQUEST_POSTS',
     subreddit: subreddit
-  }
-}
-
-export const receivePosts = (subreddit, json) => {
-  return (dispatch) => {
-    return {
-      type: 'RECEIVE_POSTS',
-      subreddit: subreddit,
-      posts: json.data.children.map(child => new PostParser(child.data, dispatch)),
-      receivedAt: Date.now()
-    }
   }
 }
 
@@ -27,9 +16,23 @@ export const changeSubreddit = (subreddit) => {
   }
 }
 
-export const updatePost = (post) => {
+const receivePosts = (subreddit, json) => {
+  return (dispatch) => {
+    json.data.children.map((child) => {
+
+      // Here is where we can perform an async operation, such as getting
+      // dimensions
+      setTimeout(() => {
+        dispatch(processedPost(child.data))
+      }, 100)
+
+    })
+  }
+}
+
+const processedPost = (post) => {
   return {
-    type: 'UPDATE_POST',
+    type: 'PROCESSED_POST',
     post: post
   }
 }

@@ -3,7 +3,7 @@ import React from 'react'
 class Navigation extends React.Component {
   render () {
     return (
-      <section className="hero is-info is-medium">
+      <section className="hero is-info">
         <div className="hero-body">
           <div className="container">
             <h1 className="title">

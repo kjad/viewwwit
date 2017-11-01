@@ -1,10 +1,14 @@
 import React from 'react'
-import Post from './Post'
+import Post from '../components/Post'
 
-const Mosaic = ({ posts, changeSubreddit, dispatch }) => {
-  console.log(dispatch)
-  dispatch({ type: 'TEST', action: 'blah' })
-  return posts.map(p => <Post key={p.id} data={p}/>)
+const Mosaic = ({ posts }) => {
+  return (
+    <table>
+      <tbody>
+        {posts.map(p => <Post key={p.id} post={p}/>)}
+      </tbody>
+    </table>
+  )
 }
 
 export default Mosaic

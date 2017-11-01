@@ -13,6 +13,13 @@ const reducer = (state = {}, action) => {
         posts: action.posts,
         receivedAt: action.receivedAt
       })
+    case 'PROCESSED_POST':
+      return Object.assign({}, state, {
+        posts: [
+          ...state.posts,
+          action.post
+        ]
+      })
     case 'UPDATE_POST':
       return Object.assign({}, state, {
         posts: state.posts.map((post) => {

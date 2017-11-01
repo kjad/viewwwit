@@ -1,19 +1,15 @@
 import React from 'react'
 
-const Post = (data, dispatch) => {
+const Post = ({ post }) => {
   return (
-    <div>
-      <table className="table">
-        <tbody>
-          <tr>
-            <td>{data.data.id}</td>
-            <td>{data.data.url}</td>
-            <td>{data.valid}</td>
-            <td>{data.loading}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <tr>
+      <td>
+        {post.id}
+      </td>
+      <td>
+        {post.url}
+      </td>
+    </tr>
   )
 }
 
