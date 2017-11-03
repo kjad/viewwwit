@@ -20,15 +20,6 @@ const reducer = (state = {}, action) => {
           action.post
         ]
       })
-    case 'UPDATE_POST':
-      return Object.assign({}, state, {
-        posts: state.posts.map((post) => {
-          if (post.id == action.post.id) {
-            post = action.post
-          }
-          return post
-        })
-      })
     default:
       return state
   }

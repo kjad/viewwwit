@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { changeSubreddit } from '../actions'
 import Search from '../components/Search'
+import { withRouter } from 'react-router'
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -15,4 +16,4 @@ const SearchContainer = connect(
   mapDispatchToProps
 )(Search)
 
-export default SearchContainer
+export default withRouter(SearchContainer)

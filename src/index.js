@@ -8,13 +8,14 @@ import { createStore, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer from './reducers'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 let rootEl = document.getElementById('root')
 
 let store = createStore(
   reducer,
   {
-    subreddit: 'pics',
+    subreddit: null,
     loading: true,
     posts: []
   },
@@ -27,7 +28,9 @@ let store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router>
+      <Route path="/" component={App} />
+    </Router>
   </Provider>
   , rootEl
 );

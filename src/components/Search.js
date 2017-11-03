@@ -1,10 +1,11 @@
 import React from 'react'
 
-const Search = ({ changeSubreddit }) => {
+const Search = (props) => {
   let input
   let onSubmit = (e) => {
     e.preventDefault()
-    changeSubreddit(input.value)
+    props.changeSubreddit(input.value)
+    props.history.push(`/r/${input.value}`)
     input.value = ''
   }
 

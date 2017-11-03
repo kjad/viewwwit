@@ -1,5 +1,3 @@
-import Post from '../components/Post'
-
 export const requestPosts = (subreddit) => {
   return {
     type: 'REQUEST_POSTS',
@@ -25,6 +23,8 @@ const receivePosts = (subreddit, json) => {
       setTimeout(() => {
         dispatch(processedPost(child.data))
       }, 100)
+
+      return child
 
     })
   }
