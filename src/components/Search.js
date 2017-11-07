@@ -4,7 +4,6 @@ const Search = (props) => {
   let input
   let onSubmit = (e) => {
     e.preventDefault()
-    props.changeSubreddit(input.value)
     props.history.push(`/r/${input.value}`)
     input.value = ''
   }
