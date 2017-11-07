@@ -1,3 +1,5 @@
+import { pickUrl } from '../app/PostParser'
+
 export const requestPosts = (subreddit) => {
   return {
     type: 'REQUEST_POSTS',
@@ -21,6 +23,9 @@ const receivePosts = (subreddit, json) => {
       // Here is where we can perform an async operation, such as getting
       // dimensions
       setTimeout(() => {
+        child.data.parsed = {
+          url: pickUrl(child.data)
+        }
         dispatch(processedPost(child.data))
       }, 100)
 

@@ -9,6 +9,9 @@ const Post = ({ post }) => {
       <td>
         {post.url}
       </td>
+      <td>
+        {post.parsed ? post.parsed.url : '--'}
+      </td>
     </tr>
   )
 }
