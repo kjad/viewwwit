@@ -6,7 +6,7 @@ A simple image viewer for reddit. Check it out @ [viewwwit.com](http://viewwwit.
 
 To run the project locally
 ```
-git clone https://github.com/kjad/viewwwit.git
+git clone https://github.com/thisiskj/viewwwit.git
 cd viewwwit
 npm install
 npm run start
