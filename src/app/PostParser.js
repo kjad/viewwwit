@@ -3,44 +3,110 @@
 // import Image from './displays/Image'
 // import Gfycat from './displays/Gfycat'
 
-export const pickUrl = data => {
-  let url = null
+export const parse = data => {
+  return new Promise((resolve, reject) => {
+    determineUrl({ raw: data })
+      .then(data => determineType(data))
+      .then(data => determineDimensions(data))
+      .then(data => resolve(data))
+      .catch(e => reject(e))
+  })
 
-  // Imgur
-  if (data.domain.match(/imgur/) && !data.url.match(/jpg|png|gif|gifv$/)) {
-    url = data.url + 'l.jpg'
+}
 
-  // Gifv files
-  } else if (data.url.match(/\.gifv$/)) {
-    url = url.replace(/gifv/, 'mp4')
+const determineUrl = (data) => {
+  return new Promise((resolve, reject) => {
+    data.url = null
 
-  // Imgur albums
+    // Imgur
+    if (data.raw.domain.match(/imgur/) && !data.raw.url.match(/jpg|png|gif|gifv$/)) {
+      data.url = data.raw.url + 'l.jpg'
 
-  // quickmeme.com
-  } else if (data.domain.match(/quickmeme.com/)) {
-    let parts = data.url.split('/')
-    let qkid = parts[parts.length - 2]
-    url = 'http://i.qkme.me/' + qkid + '.jpg'
+    // Gifv files
+    } else if (data.raw.url.match(/\.gifv$/)) {
+      data.url = data.raw.url.replace(/gifv/, 'mp4')
 
-  // gfycat.com
-  } else if (data.domain.match(/gfycat/)) {
-    let matches = data.url.match(/(\w+)$/)
-    let id = matches[1]
-    url = `https://gfycat.com/ifr/${id}`
+    // Imgur albums
 
-  // Any other image file
-  } else if (data.url.match(/jpg|png|gif$/)) {
-    url = data.url
+    // quickmeme.com
+    } else if (data.raw.domain.match(/quickmeme.com/)) {
+      let parts = data.raw.url.split('/')
+      let qkid = parts[parts.length - 2]
+      data.url = 'http://i.qkme.me/' + qkid + '.jpg'
 
-  // TODO: youtube.com
+    // gfycat.com
+    } else if (data.raw.domain.match(/gfycat/)) {
+      let matches = data.raw.url.match(/(\w+)$/)
+      let id = matches[1]
+      data.url = `https://gfycat.com/ifr/${id}`
 
-  // TODO: clips.twitch.com
+    // Any other image file
+    } else if (data.raw.url.match(/jpg|png|gif$/)) {
+      data.url = data.raw.url
 
-  // Otherwise, its unsupported
-  } else {
-    console.log("Possibly unsupported url: ", data.url, data)
-  }
-  return url
+    // TODO: youtube.com
+
+    // TODO: clips.twitch.com
+
+    // Otherwise, its unsupported
+    }
+
+    if (data.url) {
+      resolve(data)
+    } else {
+      reject({ error: `Could not determine URL for ${data.raw.url}`})
+    }
+  })
+}
+
+const determineType = (data) => {
+  return new Promise((resolve, reject) => {
+    if (! data.url) {
+      reject({ error: "No URL to determine type" })
+    }
+
+    data.type = 'image'
+    if (data.url.match(/\.mp4$/)) {
+      data.type = 'video'
+    } else if (data.url.match(/gfycat/)) {
+      data.type = 'gfycat'
+    }
+
+    resolve(data)
+  })
+}
+
+export const determineDimensions = (data) => {
+
+  // TODO: Support mp4/gfycat
+
+  return new Promise((resolve, reject) => {
+    const img = document.createElement('img');
+    img.src = data.url
+
+    let i = 0
+    const max = 100
+    const interval = 10
+    const poll = setInterval(() => {
+
+      i += 1
+      if (i > max) {
+        clearInterval(poll)
+        reject({ error: `Cannot get dimenions for image ${data.url}` })
+      }
+
+      if (img.naturalWidth) {
+        clearInterval(poll);
+
+        data.dimensions = {
+          width: img.naturalWidth,
+          height: img.naturalHeight
+        }
+        resolve(data)
+      }
+    }, interval);
+  })
+
 }
 
 // class PostParser {

@@ -4,13 +4,19 @@ const Post = ({ post }) => {
   return (
     <tr>
       <td>
-        {post.id}
+        {post.raw.id}
       </td>
       <td>
-        {post.url}
+        {post.raw.url}
       </td>
       <td>
-        {post.parsed ? post.parsed.url : '--'}
+        {post.url ? post.url : '--'}
+      </td>
+      <td>
+        {post.type ? post.type : '--'}
+      </td>
+      <td>
+        {post.dimensions ? JSON.stringify(post.dimensions) : '--'}
       </td>
     </tr>
   )

@@ -1,4 +1,4 @@
-import { pickUrl } from '../app/PostParser'
+import { parse } from '../app/PostParser'
 
 export const requestPosts = (subreddit) => {
   return {
@@ -19,18 +19,10 @@ export const changeSubreddit = (subreddit) => {
 const receivePosts = (subreddit, json) => {
   return (dispatch) => {
     json.data.children.map((child) => {
-
-      // Here is where we can perform an async operation, such as getting
-      // dimensions
-      setTimeout(() => {
-        child.data.parsed = {
-          url: pickUrl(child.data)
-        }
-        dispatch(processedPost(child.data))
-      }, 100)
-
+      parse(child.data)
+        .then(data => dispatch(processedPost(data)))
+        .catch(e => console.log(e))
       return child
-
     })
   }
 }

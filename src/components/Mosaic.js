@@ -15,7 +15,7 @@ class Mosaic extends React.Component {
         <h4>{this.props.subreddit}</h4>
         <table>
           <tbody>
-            {this.props.posts.map(p => <Post key={p.id} post={p}/>)}
+            {this.props.posts.map(p => <Post key={p.raw.id} post={p}/>)}
           </tbody>
         </table>
       </div>
