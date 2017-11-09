@@ -1,24 +1,19 @@
 import React from 'react'
 
-const Post = ({ post }) => {
+const Post = ({ post, height }) => {
+
+  let img = (<div>--</div>)
+  if (post.url && post.type === 'image' && post.dimensions) {
+    const style = {
+      height: height.toString() + 'px',
+      paddingLeft: '5px',
+      paddingRight: '5px'
+    }
+    img = (<img src={post.url} style={style}/>)
+  }
+
   return (
-    <tr>
-      <td>
-        {post.raw.id}
-      </td>
-      <td>
-        {post.raw.url}
-      </td>
-      <td>
-        {post.url ? post.url : '--'}
-      </td>
-      <td>
-        {post.type ? post.type : '--'}
-      </td>
-      <td>
-        {post.dimensions ? JSON.stringify(post.dimensions) : '--'}
-      </td>
-    </tr>
+    <span>{img}</span>
   )
 }
 
