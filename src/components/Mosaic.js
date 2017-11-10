@@ -14,8 +14,10 @@ class Mosaic extends React.Component {
   // aspect ratio for all the provided posts
   calculateHeight(posts) {
     return this.browserWidth() / _.reduce(posts, (sum, post) => {
-      // 35 = posts in row * 2 * margin of each post + 5
-      return sum + ((post.dimensions.width + 35) / post.dimensions.height)
+      const postsInRow = 3
+      const lrPadding = 10
+      const extraWidth = postsInRow * lrPadding * 2 + 0
+      return sum + ((post.dimensions.width + extraWidth) / post.dimensions.height)
     }, 0);
   }
   browserWidth() {
@@ -29,7 +31,7 @@ class Mosaic extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="has-text-centered">
         <h4>{this.props.subreddit}</h4>
         {_(this.props.posts)
           .chunk(3)

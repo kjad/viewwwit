@@ -1,15 +1,24 @@
 import React from 'react'
+require('./Post.css')
 
 const Post = ({ post, height }) => {
 
   let img = (<div>--</div>)
   if (post.url && post.type === 'image' && post.dimensions) {
-    const style = {
+    const divStyle = {
       height: height.toString() + 'px',
-      paddingLeft: '5px',
-      paddingRight: '5px'
     }
-    img = (<img src={post.url} style={style}/>)
+    const imgStyle = {
+      height: '100%',
+    }
+    img = (
+      <div className="post-container" style={divStyle}>
+        <div className="post-text">
+          <h4>{post.raw.title}</h4>
+        </div>
+        <img src={post.url} style={imgStyle}/>
+      </div>
+    )
   }
 
   return (
