@@ -1,24 +1,13 @@
 .post-container {
     position: relative;
     display: inline-block;
-    margin-left: 10px;
-    margin-right: 10px;
     margin-bottom: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
 }
 .post-text {
     position: absolute;
     height: 100%;
-    /*text-align: center;*/
     width: 100%;
 }
-/*.post-text:before {
-   content: '';
-   display: inline-block;
-   height: 100%;
-   vertical-align: top;
-}*/
 .post-text h4 {
    display: inline-block;
    font-size: 20px;
@@ -26,9 +15,3 @@
    background-color: #333;
    opacity: 0.5;
 }
-/*
-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-}*/

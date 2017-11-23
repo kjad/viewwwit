@@ -13,12 +13,14 @@ class Mosaic extends React.Component {
   // To caculate the height for the row, return the browser width divided by the average
   // aspect ratio for all the provided posts
   calculateHeight(posts) {
-    return this.browserWidth() / _.reduce(posts, (sum, post) => {
-      const postsInRow = 3
-      const lrPadding = 10
-      const extraWidth = postsInRow * lrPadding * 2 + 0
-      return sum + ((post.dimensions.width + extraWidth) / post.dimensions.height)
-    }, 0);
+    // const postsInRow = 3
+    // const lrPadding = 10
+    // const extraWidth = postsInRow * lrPadding * 2 + 10
+    const avgAspectRatio = _.chain(posts).map(p => {
+      const x = (p.dimensions.width) / p.dimensions.height
+      return x
+    }).sum().value()
+    return Math.floor(this.browserWidth() / avgAspectRatio)
   }
   browserWidth() {
     return Math.max(

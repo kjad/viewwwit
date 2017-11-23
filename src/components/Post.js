@@ -2,16 +2,16 @@ import React from 'react'
 require('./Post.css')
 
 const Post = ({ post, height }) => {
-
-  let img = (<div>--</div>)
   if (post.url && post.type === 'image' && post.dimensions) {
+    const aspectRatio = post.dimensions.width / post.dimensions.height
     const divStyle = {
       height: height.toString() + 'px',
+      width: (Math.floor(aspectRatio * height)).toString() + 'px'
     }
     const imgStyle = {
       height: '100%',
     }
-    img = (
+    return (
       <div className="post-container" style={divStyle}>
         <div className="post-text">
           <h4>{post.raw.title}</h4>
@@ -20,10 +20,6 @@ const Post = ({ post, height }) => {
       </div>
     )
   }
-
-  return (
-    <span>{img}</span>
-  )
 }
 
 export default Post

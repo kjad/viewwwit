@@ -85,7 +85,7 @@ export const determineDimensions = (data) => {
     img.src = data.url
 
     let i = 0
-    const max = 100
+    const max = 1000
     const interval = 10
     const poll = setInterval(() => {
 
