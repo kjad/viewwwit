@@ -1,0 +1,17 @@
+.post-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+.post-text {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+.post-text h4 {
+   display: inline-block;
+   font-size: 20px;
+   color: #FFF;
+   background-color: #333;
+   opacity: 0.5;
+}
